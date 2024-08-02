@@ -26,10 +26,10 @@ public class JdbcTemplateItemRepositoryV1 implements ItemRepository {
     }
     @Override
     public Item save(Item item) {
-        String sql = "insert into item(item_name, price, quantity) values(?, ?, ?)";
+        String sql = "insert into item (item_name, price, quantity) values (?, ?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
-        template.update(con -> {
-            PreparedStatement ps = con.prepareStatement(sql, new String[]{"id"});
+        template.update(connection -> {
+            PreparedStatement ps = connection.prepareStatement(sql, new String[]{"id"});
             ps.setString(1, item.getItemName());
             ps.setInt(2, item.getPrice());
             ps.setInt(3, item.getQuantity());
@@ -79,14 +79,14 @@ public class JdbcTemplateItemRepositoryV1 implements ItemRepository {
 
         String sql = "select id, item_name, price, quantity from item";
         if(StringUtils.hasText(itemName) || maxPrice != null) {
-            sql += "where";
+            sql += " where";
         }
 
         boolean andFlag = false;
         List<Object> param = new ArrayList<>();
 
         if (StringUtils.hasText(itemName)) {
-            sql += "item_name like concat('%', ? , '%')";
+            sql += " item_name like concat('%', ? , '%')";
             param.add(itemName);
             andFlag = true;
         }
@@ -96,7 +96,7 @@ public class JdbcTemplateItemRepositoryV1 implements ItemRepository {
                 sql += " and";
             }
 
-            sql += "price <= ?";
+            sql += "  price <= ?";
             param.add(maxPrice);
         }
 
