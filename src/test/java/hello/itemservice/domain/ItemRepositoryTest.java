@@ -27,22 +27,6 @@ class ItemRepositoryTest {
     @Autowired
     ItemRepository itemRepository;
 
-//    @Autowired
-//    PlatformTransactionManager transactionManager;
-//    TransactionStatus status;
-//
-//    @BeforeEach
-//    void beforeEach() {
-//        // transaction 시작
-//        status = transactionManager.getTransaction(new DefaultTransactionDefinition());
-//    }
-//
-//    @AfterEach
-//    void afterEach() {
-//        // transaction rollback
-//        transactionManager.rollback(status);
-//    }
-
     @Test
     void save() {
         //given
