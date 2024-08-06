@@ -4,6 +4,7 @@ import hello.itemservice.repository.ItemRepository;
 import hello.itemservice.repository.ItemSearchCond;
 import hello.itemservice.repository.ItemUpdateDto;
 import hello.itemservice.repository.memory.MemoryItemRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,9 +20,11 @@ import org.springframework.transaction.support.DefaultTransactionDefinition;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.linesOf;
 
 @Transactional
 @SpringBootTest
+@Slf4j
 class ItemRepositoryTest {
 
     @Autowired
@@ -34,9 +37,9 @@ class ItemRepositoryTest {
 
         //when
         Item savedItem = itemRepository.save(item);
-
+        log.info(savedItem.getId().toString());
         //then
-        Item findItem = itemRepository.findById(item.getId()).get();
+        Item findItem = itemRepository.findById(savedItem.getId()).get();
         assertThat(findItem).isEqualTo(savedItem);
 //        assertThat(findItem.getId()).isEqualTo(savedItem.getId());
     }
@@ -67,9 +70,9 @@ class ItemRepositoryTest {
         Item item2 = new Item("itemA-2", 20000, 20);
         Item item3 = new Item("itemB-1", 30000, 30);
 
-        itemRepository.save(item1);
-        itemRepository.save(item2);
-        itemRepository.save(item3);
+        item1 = itemRepository.save(item1);
+        item2 = itemRepository.save(item2);
+        item3 = itemRepository.save(item3);
 
         //둘  다 없음 검증
         test(null, null, item1, item2, item3);

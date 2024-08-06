@@ -1,8 +1,11 @@
 package hello.itemservice.domain;
 
+import hello.itemservice.repository.entity.ItemEntity;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
+@AllArgsConstructor
 public class Item {
 
     private Long id;
@@ -19,4 +22,9 @@ public class Item {
         this.price = price;
         this.quantity = quantity;
     }
+
+    public ItemEntity toModel() {
+        return new ItemEntity(this.itemName, this.price, this.quantity);
+    }
+
 }
