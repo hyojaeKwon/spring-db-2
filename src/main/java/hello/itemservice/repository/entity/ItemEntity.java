@@ -13,6 +13,7 @@ import javax.persistence.*;
 @Setter
 @ToString
 @NoArgsConstructor
+@Table(name = "item")
 public class ItemEntity {
 
     @Id
